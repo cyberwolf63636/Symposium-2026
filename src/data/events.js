@@ -16,7 +16,15 @@ export const events = [
     info: "Venue: Lab 2 | Time: 11:30 AM"
   },
   {
-    id: 3,
+    id:3,
+    category: "Technical",
+    title: "Project Expo",
+    image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=500",
+    description: "Presenting the Prototype or your working module of projects .",
+    info: "Venue: Lab 2 | Time: 11:30 AM"
+  },
+  {
+    id: 4,
     category: "Non-Technical",
     title: "Photography",
     image: "https://images.unsplash.com/photo-1452784444945-3f422708fe5e?q=80&w=500",
@@ -24,7 +32,7 @@ export const events = [
     info: "Venue: Campus | Sub: 2:00 PM"
   },
   {
-    id: 4,
+    id: 5,
     category: "Non-Technical",
     title: "Treasure Hunt",
     image: "https://images.unsplash.com/photo-1523821741446-edb2b68bb7a0?q=80&w=500",
