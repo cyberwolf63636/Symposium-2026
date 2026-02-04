@@ -80,9 +80,9 @@ const AdminDashboard = () => {
 
         await emailjs.send(
           "service_oyls64s",       // YOUR SERVICE ID
-          "PASTE_YOUR_TEMPLATE_ID", // YOUR APPROVAL TEMPLATE ID
+          "template_6lus445", // YOUR APPROVAL TEMPLATE ID
           emailParams,
-          "PASTE_YOUR_PUBLIC_KEY"   // YOUR PUBLIC KEY
+          "_ejheO0SbyP8Gu4TE"   // YOUR PUBLIC KEY
         );
       }
 
