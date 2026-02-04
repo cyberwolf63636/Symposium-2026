@@ -25,7 +25,7 @@ const Navbar = () => {
         {/* LOGO */}
         <Link to="/" className="flex items-center gap-2 font-bold text-xl text-white tracking-wider">
            <img src="../public/logo.png" alt="Symposium Logo" className="h-8 w-auto" />
-           <span>SYMPOSIUM 2026</span>
+           <span>SKP Engineering College</span>
         </Link>
 
         {/* DESKTOP LINKS */}
@@ -74,5 +74,6 @@ const Navbar = () => {
     </nav>
   );
 };
+
 
 export default Navbar;
