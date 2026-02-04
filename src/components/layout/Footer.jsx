@@ -11,8 +11,8 @@ const Footer = () => {
         <div className="space-y-4">
           <div className="flex items-center gap-2 font-bold text-xl text-white tracking-wider">
             {/* Make sure logo.png is in your public folder, or remove the img tag if not ready */}
-            <img src="../public/logo.png" alt="Logo" className="h-8 w-auto" /> 
-            <span>SYMPOSIUM 2026</span>
+            <img src="../public/logo.webp" alt="Logo" className="h-8 w-auto" /> 
+            <span>INFOVISTA 2026</span>
           </div>
           <p className="text-sm leading-relaxed">
             The ultimate national-level technical symposium. Unleash your potential and compete with the best minds.
@@ -44,7 +44,7 @@ const Footer = () => {
             </li>
             <li className="flex items-center gap-3">
               <Mail size={18} className="text-blue-500 shrink-0" />
-              <span>symposium2026@skp.edu</span>
+              <span>csecs149@gmail.com</span>
             </li>
           </ul>
         </div>
@@ -68,5 +68,6 @@ const Footer = () => {
     </footer>
   );
 };
+
 
 export default Footer;
