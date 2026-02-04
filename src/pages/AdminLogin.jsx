@@ -9,7 +9,7 @@ const AdminLogin = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     // Simple hardcoded password (Change this!)
-    if (password === 'admin123') {
+    if (password === 'CyberWolf26#') {
       localStorage.setItem('isAdmin', 'true');
       navigate('/admin/dashboard');
     } else {
@@ -43,5 +43,6 @@ const AdminLogin = () => {
     </div>
   );
 };
+
 
 export default AdminLogin;
