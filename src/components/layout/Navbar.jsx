@@ -24,7 +24,7 @@ const Navbar = () => {
         
         {/* LOGO */}
         <Link to="/" className="flex items-center gap-2 font-bold text-xl text-white tracking-wider">
-           <img src="../public/logo.webp" alt="Symposium Logo" className="h-8 w-auto" />
+           <img src="/logo.png" alt="Symposium Logo" className="h-8 w-auto" />
            <span>SKP Engineering College</span>
         </Link>
 

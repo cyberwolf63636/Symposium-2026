@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="space-y-4">
           <div className="flex items-center gap-2 font-bold text-xl text-white tracking-wider">
             {/* Make sure logo.png is in your public folder, or remove the img tag if not ready */}
-            <img src="../../public/logo.png" alt="Logo" className="h-8 w-auto" /> 
+            <img src="/logo.png" alt="Logo" className="h-8 w-auto" /> 
             <span>INFOVISTA 2026</span>
           </div>
           <p className="text-sm leading-relaxed">
