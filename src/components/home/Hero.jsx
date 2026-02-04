@@ -17,7 +17,7 @@ const Hero = () => {
         </p>
         
         <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-8 bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent drop-shadow-2xl">
-          AANIVARU <br /> AKKUVARU
+          INFOVISTA <br /> 2026
         </h1>
 
         <p className="max-w-2xl mx-auto text-slate-400 text-lg md:text-xl mb-12 leading-relaxed font-light">
@@ -43,7 +43,7 @@ const Hero = () => {
       <div className="absolute bottom-8 w-full flex flex-wrap justify-center gap-8 md:gap-16 text-slate-500 text-xs font-bold tracking-[0.2em] uppercase">
         <div className="flex flex-col items-center">
           <span className="text-blue-500 mb-1">Date</span>
-          <span>March 15, 2026</span>
+          <span>February 27, 2026</span>
         </div>
         <div className="flex flex-col items-center">
           <span className="text-blue-500 mb-1">Venue</span>
@@ -57,5 +57,6 @@ const Hero = () => {
     </section>
   );
 };
+
 
 export default Hero;
