@@ -5,23 +5,23 @@ export const events = [
     title: "Paper Presentation",
     image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=500",
     description: "Showcase your research and innovation in emerging tech.",
-    info: "Venue: CSE Block | Time: 10:00 AM"
+    info: "Both Individual and Team performance are allowed."
   },
   {
     id: 2,
     category: "Technical",
-    title: "Code Debugging",
+    title: "Code Crackers",
     image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=500",
     description: "Find the bugs and fix the logic in record time.",
-    info: "Venue: Lab 2 | Time: 11:30 AM"
+    info: "Maximum 2 members per team"
   },
   {
     id:3,
     category: "Technical",
     title: "Project Expo",
-    image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=500",
+    image: "https://www.eng.cam.ac.uk/news/project-expo-2009",
     description: "Presenting the Prototype or your working module of projects .",
-    info: "Venue: Lab 2 | Time: 11:30 AM"
+    info: "Both team and Individual Participants are allowed . All technical domains are allowed"
   },
   {
     id: 4,
