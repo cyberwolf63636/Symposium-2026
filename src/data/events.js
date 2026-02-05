@@ -19,7 +19,7 @@ export const events = [
     id:3,
     category: "Technical",
     title: "Project Expo",
-    image: "https://www.eng.cam.ac.uk/news/project-expo-2009",
+    image: "https://www.eng.cam.ac.uk/sites/www.eng.cam.ac.uk/files/styles/full_bleed_inner_page_leading/public/uploads/news/images/590x288_229.jpg?itok=wytt-hOV",
     description: "Presenting the Prototype or your working module of projects .",
     info: "Both team and Individual Participants are allowed . All technical domains are allowed"
   },
@@ -39,4 +39,5 @@ export const events = [
     description: "Follow the clues and find the hidden glory.",
     info: "Venue: Grounds | Time: 1:30 PM"
   }
+
 ];
