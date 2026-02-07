@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast'; // ✅ NEW: Import Toaster
+import { Toaster } from 'react-hot-toast'; 
 
 // Layout Components
 import Navbar from './components/layout/Navbar';
@@ -38,8 +38,8 @@ const App = () => {
         reverseOrder={false} 
         toastOptions={{
           style: {
-            background: '#1e293b', // Dark blue-gray background
-            color: '#fff', // White text
+            background: '#1e293b', 
+            color: '#fff', 
             border: '1px solid #334155',
           },
         }}
