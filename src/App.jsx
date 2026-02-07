@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast'; // ✅ NEW: Import Toaster
 
 // Layout Components
 import Navbar from './components/layout/Navbar';
@@ -9,7 +10,7 @@ import Footer from './components/layout/Footer';
 import HomePage from './pages/HomePage';
 import EventsPage from './pages/EventsPage';
 import RegistrationPage from './pages/RegistrationPage';
-import StatusPage from './pages/StatusPage'; // ✅ NEW: Import Status Page
+import StatusPage from './pages/StatusPage';
 
 // Admin Pages
 import AdminLogin from './pages/AdminLogin';
@@ -30,21 +31,36 @@ const PublicLayout = () => {
 
 const App = () => {
   return (
-    <Routes>
-      
-      {/* PUBLIC ROUTES (With Navbar & Footer) */}
-      <Route element={<PublicLayout />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/events" element={<EventsPage />} />
-        <Route path="/register" element={<RegistrationPage />} />
-        <Route path="/status" element={<StatusPage />} /> {/* ✅ NEW: Route Added */}
-      </Route>
+    <>
+      {/* ✅ NEW: This container renders all your popups globally */}
+      <Toaster 
+        position="top-center" 
+        reverseOrder={false} 
+        toastOptions={{
+          style: {
+            background: '#1e293b', // Dark blue-gray background
+            color: '#fff', // White text
+            border: '1px solid #334155',
+          },
+        }}
+      />
 
-      {/* ADMIN ROUTES (Fullscreen - No Navbar/Footer) */}
-      <Route path="/admin" element={<AdminLogin />} />
-      <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      <Routes>
+        
+        {/* PUBLIC ROUTES (With Navbar & Footer) */}
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/events" element={<EventsPage />} />
+          <Route path="/register" element={<RegistrationPage />} />
+          <Route path="/status" element={<StatusPage />} />
+        </Route>
 
-    </Routes>
+        {/* ADMIN ROUTES (Fullscreen - No Navbar/Footer) */}
+        <Route path="/admin" element={<AdminLogin />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+
+      </Routes>
+    </>
   );
 };
 

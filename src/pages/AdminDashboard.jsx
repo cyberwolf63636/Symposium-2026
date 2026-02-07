@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../api/SupabaseClient';
 import { useNavigate } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
+import toast from 'react-hot-toast'; // ✅ NEW: Import Toast
 import { Users, CreditCard, Calendar, FileDown, LogOut, Search, BarChart3, CheckCircle, XCircle, Loader2, Trash2 } from 'lucide-react';
 
 const AdminDashboard = () => {
@@ -36,6 +37,7 @@ const AdminDashboard = () => {
 
     } catch (error) {
       console.error('Error fetching data:', error);
+      toast.error("Failed to load data");
     } finally {
       setLoading(false);
     }
@@ -63,7 +65,10 @@ const AdminDashboard = () => {
 
   const updateStatus = async (id, newStatus, studentEmail, studentName) => {
     setUpdatingId(id);
+    const toastId = toast.loading("Processing..."); // ✅ Start Loading Toast
+
     try {
+      // 1. Update Database
       const { error } = await supabase
         .from('registrations')
         .update({ status: newStatus })
@@ -71,42 +76,50 @@ const AdminDashboard = () => {
 
       if (error) throw error;
 
+      // 2. Send Email (Only if Confirmed)
       if (newStatus === 'confirmed') {
         const emailParams = {
           to_email: studentEmail, 
           to_name: studentName,
-          message: "Congratulations! Your registration has been approved. Please visit the Status page to download your entry ticket.",
+          // ✅ NEW MESSAGE: Directs them to your site to download ticket
+          message: "Congratulations! Your registration has been approved. Please visit https://symposium-2026-three.vercel.app/status to check your status and download your entry ticket.",
         };
 
         await emailjs.send(
-          "service_oyls64s",       // YOUR SERVICE ID
-          "template_6lus445", // YOUR APPROVAL TEMPLATE ID
+          "service_oyls64s",       // Your Service ID
+          "template_6lus445",      // Your Template ID
           emailParams,
-          "_ejheO0SbyP8Gu4TE"   // YOUR PUBLIC KEY
+          "_ejheO0SbyP8Gu4TE"      // Your Public Key
         );
       }
 
+      // 3. Update Local State
       const updatedData = registrations.map(item => 
         item.id === id ? { ...item, status: newStatus } : item
       );
       setRegistrations(updatedData);
       calculateStats(updatedData);
 
+      // ✅ Success Toast
+      toast.success(`Successfully ${newStatus === 'confirmed' ? 'Approved' : 'Rejected'}`, { id: toastId });
+
     } catch (error) {
       console.error("Error:", error);
-      alert("Status updated, but email failed: " + error.message);
+      // ✅ Error Toast
+      toast.error("Action failed: " + error.message, { id: toastId });
     } finally {
       setUpdatingId(null);
     }
   };
 
   const handleResetDatabase = async () => {
+    // We keep window.confirm for safety, but replace alerts with toasts
     if (!window.confirm("⚠️ DANGER: Are you sure you want to DELETE ALL DATA? This cannot be undone!")) {
       return;
     }
     const confirmText = prompt("Type 'DELETE' to confirm clearing the database:");
     if (confirmText !== 'DELETE') {
-      alert("Action cancelled.");
+      toast.error("Deletion Cancelled");
       return;
     }
 
@@ -119,13 +132,13 @@ const AdminDashboard = () => {
 
       if (error) throw error;
 
-      alert("✅ Database successfully cleared.");
+      toast.success("✅ Database successfully cleared.");
       setRegistrations([]);
       setStats({ total: 0, revenue: 0, pending: 0 });
       setEventCounts({});
       
     } catch (error) {
-      alert("Error clearing database: " + error.message);
+      toast.error("Error clearing database: " + error.message);
     } finally {
       setLoading(false);
     }
@@ -138,7 +151,7 @@ const AdminDashboard = () => {
 
   const exportToCSV = () => {
     if (registrations.length === 0) {
-      alert("No data to export!");
+      toast.error("No data to export!");
       return;
     }
     const headers = ["ID", "Name", "Email", "Phone", "College", "Type", "Team Name", "Events", "Total Fee", "Transaction ID", "Status", "Date"];
@@ -174,6 +187,7 @@ const AdminDashboard = () => {
     a.download = `symposium_data_${new Date().toISOString().split('T')[0]}.csv`;
     a.click();
     window.URL.revokeObjectURL(url);
+    toast.success("CSV Downloaded!");
   };
 
   const filteredData = registrations.filter(item => 
@@ -289,7 +303,6 @@ const AdminDashboard = () => {
               <thead className="bg-slate-950 text-slate-200 uppercase font-bold text-xs">
                 <tr>
                   <th className="px-6 py-4">Name</th>
-                  {/* ✅ Added Email Header */}
                   <th className="px-6 py-4">Email</th> 
                   <th className="px-6 py-4">College</th>
                   <th className="px-6 py-4">Type</th>
@@ -308,7 +321,6 @@ const AdminDashboard = () => {
                   filteredData.map((user) => (
                     <tr key={user.id} className="hover:bg-slate-800/50 transition-colors">
                       <td className="px-6 py-4 font-medium text-white">{user.full_name}</td>
-                      {/* ✅ Added Email Data */}
                       <td className="px-6 py-4 text-slate-300">{user.email}</td>
                       <td className="px-6 py-4">{user.college}</td>
                       <td className="px-6 py-4">

@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // ✅ Import Navigation
 import { events } from '../../data/events';
 import { supabase } from '../../api/SupabaseClient'; 
 import emailjs from '@emailjs/browser';
+import toast from 'react-hot-toast'; // ✅ Import Toast
 import QRCode from "react-qr-code"; 
 import { User, Users, Plus, X, Check, Loader2 } from 'lucide-react';
 
 const RegistrationSection = () => {
+  const navigate = useNavigate(); // ✅ Initialize Navigation
   const [regType, setRegType] = useState('individual'); // 'individual' or 'team'
   const [isSubmitting, setIsSubmitting] = useState(false);
   
@@ -21,17 +24,13 @@ const RegistrationSection = () => {
     file: null
   });
 
-  const FEE_PER_PERSON = 150;
+  const FEE_PER_PERSON = 200;
 
   // 1. Calculate Total Fee
   const totalPeople = regType === 'individual' ? 1 : 1 + formData.teamMembers.length;
   const totalFee = totalPeople * FEE_PER_PERSON;
 
-  // 2. Generate Dynamic UPI Link (UPDATED WITH YOUR ID)
-  // pa = Payee Address
-  // pn = Payee Name (Symposium)
-  // am = Amount
-  // cu = Currency
+  // 2. Generate Dynamic UPI Link
   const upiLink = `upi://pay?pa=pugazhmanik24@okaxis&pn=Symposium2026&am=${totalFee}&cu=INR`;
 
   // --- HANDLERS ---
@@ -59,6 +58,8 @@ const RegistrationSection = () => {
   const addTeamMember = () => {
     if (formData.teamMembers.length < 4) { 
       setFormData(prev => ({ ...prev, teamMembers: [...prev.teamMembers, ""] }));
+    } else {
+      toast.error("Maximum 4 team members allowed");
     }
   };
 
@@ -77,17 +78,19 @@ const RegistrationSection = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // ✅ Validation with Toasts
     if (!formData.file) {
-      alert("Please upload the payment screenshot!");
+      toast.error("Please upload the payment screenshot!");
       return;
     }
     
     if (formData.selectedEvents.length === 0) {
-      alert("Please select at least one event!");
+      toast.error("Please select at least one event!");
       return;
     }
 
     setIsSubmitting(true);
+    const toastId = toast.loading("Processing Registration..."); // ✅ Loading Toast
 
     try {
       // 1. Upload Image to Supabase Storage
@@ -96,7 +99,7 @@ const RegistrationSection = () => {
       const fileName = `${Date.now()}_${cleanName}.${fileExt}`;
 
       const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('payments-proof') // Matches your bucket name
+        .from('payments-proof') 
         .upload(fileName, formData.file);
 
       if (uploadError) throw uploadError;
@@ -128,7 +131,7 @@ const RegistrationSection = () => {
 
       if (insertError) throw insertError;
 
-      // 4. SEND EMAIL NOTIFICATION (EmailJS)
+      // 4. SEND EMAIL NOTIFICATION (To Admin)
       const emailParams = {
         to_name: "Admin",
         from_name: formData.leaderName,
@@ -142,26 +145,30 @@ const RegistrationSection = () => {
       };
 
       await emailjs.send(
-        "service_oyls64s",         // ✅ Your Service ID
-        "template_887gzox",  // ❌ REPLACE THIS with your actual Template ID
+        "service_oyls64s",     // Your Service ID
+        "template_887gzox",    // Your 'New Registration' Template ID
         emailParams,
-        "_ejheO0SbyP8Gu4TE"    // ❌ REPLACE THIS with your actual Public Key
+        "_ejheO0SbyP8Gu4TE"    // Your Public Key
       );
 
-      // 5. Success Message
-      alert("Registration Successful! Confirmation email sent.");
-      window.location.reload(); 
+      // 5. Success Flow
+      toast.success("Registration Successful! Redirecting...", { id: toastId });
+      
+      // ✅ Wait 2 seconds so user sees the success message, then redirect
+      setTimeout(() => {
+        navigate('/status'); 
+      }, 2000);
 
     } catch (error) {
       console.error("Error:", error);
-      alert("Registration Failed: " + error.message);
+      toast.error("Registration Failed: " + error.message, { id: toastId });
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <section className="py-12 bg-[#0f172a] text-white min-h-screen">
+    <section className="py-6 text-white min-h-screen">
       <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row gap-12">
         
         {/* LEFT SIDE: Logic & Payment Summary */}
@@ -216,7 +223,7 @@ const RegistrationSection = () => {
                 <span className="font-bold text-3xl text-blue-400">₹ {totalFee}</span>
               </div>
 
-              {/* ✅ DYNAMIC QR CODE SECTION */}
+              {/* DYNAMIC QR CODE SECTION */}
               <div className="bg-white p-4 rounded-lg mt-4 flex flex-col items-center justify-center">
                  <div style={{ height: "auto", margin: "0 auto", maxWidth: "100%", width: "100%" }}>
                     <QRCode
