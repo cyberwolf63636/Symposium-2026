@@ -13,7 +13,11 @@ const Hero = () => {
       {/* Content */}
       <div className="text-center z-10 max-w-5xl mx-auto">
         <p className="text-blue-400 font-bold tracking-[0.3em] uppercase text-sm mb-6 animate-pulse">
-          National Level Technical Symposium 2026
+          The Department of Cybersecurity, AI&DS and AI&ML coordially presents...
+        </p>
+        <div className="text-center z-10 max-w-5xl mx-auto">
+        <p className="text-blue-400 font-bold tracking-[0.3em] uppercase text-sm mb-6 animate-pulse">
+          National Level Technical Symposium 
         </p>
         
         <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-8 bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent drop-shadow-2xl">
@@ -60,3 +64,4 @@ const Hero = () => {
 
 
 export default Hero;
+
