@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center px-4 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col items-center justify-center px-4 overflow-hidden bg-slate-950">
       {/* Background Glows */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full -z-10">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-600/20 rounded-full blur-[120px]"></div>
@@ -11,15 +11,15 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="text-center z-10 max-w-5xl mx-auto">
-        <p className="text-blue-400 font-bold tracking-[0.3em] uppercase text-sm mb-6 animate-pulse">
+      <div className="text-center z-10 max-w-5xl mx-auto relative">
+        <p className="text-blue-400 font-bold tracking-[0.3em] uppercase text-xs md:text-sm mb-2 animate-pulse">
           The Department of Cybersecurity, AI&DS and AI&ML coordially presents...
         </p>
-        <div className="text-center z-10 max-w-5xl mx-auto">
-        <p className="text-blue-400 font-bold tracking-[0.3em] uppercase text-sm mb-6 animate-pulse">
-          National Level Technical Symposium 
-        </p>
         
+        <p className="text-blue-400 font-bold tracking-[0.3em] uppercase text-xs md:text-sm mb-6 animate-pulse">
+          National Level Technical Symposium
+        </p>
+       
         <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-8 bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent drop-shadow-2xl">
           INFOVISTA <br /> 2026
         </h1>
@@ -44,7 +44,7 @@ const Hero = () => {
       </div>
 
       {/* Info Footer */}
-      <div className="absolute bottom-8 w-full flex flex-wrap justify-center gap-8 md:gap-16 text-slate-500 text-xs font-bold tracking-[0.2em] uppercase">
+      <div className="absolute bottom-8 w-full flex flex-wrap justify-center gap-8 md:gap-16 text-slate-500 text-xs font-bold tracking-[0.2em] uppercase z-20">
         <div className="flex flex-col items-center">
           <span className="text-blue-500 mb-1">Date</span>
           <span>February 27, 2026</span>
@@ -62,6 +62,4 @@ const Hero = () => {
   );
 };
 
-
 export default Hero;
-
