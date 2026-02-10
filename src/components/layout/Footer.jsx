@@ -40,7 +40,7 @@ const Footer = () => {
             </li>
             <li className="flex items-center gap-3">
               <Phone size={18} className="text-blue-500 shrink-0" />
-              <span>+91 98765 43210</span>
+              <span>+91 8754728893</span>
             </li>
             <li className="flex items-center gap-3">
               <Mail size={18} className="text-blue-500 shrink-0" />
@@ -53,7 +53,7 @@ const Footer = () => {
         <div>
           <h3 className="text-white font-bold mb-4">Follow Us</h3>
           <div className="flex gap-4">
-            <a href="#" className="bg-slate-900 p-2 rounded-lg hover:bg-blue-600 hover:text-white transition-all">
+            <a href="https://www.instagram.com/skpec.official?igsh=MWU4cW9xcjV1dnZu" className="bg-slate-900 p-2 rounded-lg hover:bg-blue-600 hover:text-white transition-all">
               <Instagram size={20} />
             </a>
             {/* Add more social icons here if needed */}
@@ -71,3 +71,4 @@ const Footer = () => {
 
 
 export default Footer;
+
