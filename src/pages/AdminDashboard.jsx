@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../api/SupabaseClient';
 import { useNavigate } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
-import toast from 'react-hot-toast'; // ✅ NEW: Import Toast
+import toast from 'react-hot-toast';
 import { Users, CreditCard, Calendar, FileDown, LogOut, Search, BarChart3, CheckCircle, XCircle, Loader2, Trash2 } from 'lucide-react';
 
 const AdminDashboard = () => {
@@ -14,14 +14,44 @@ const AdminDashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [updatingId, setUpdatingId] = useState(null);
 
+  // 🛡️ SECURITY LAYER 3: SESSION VERIFICATION
   useEffect(() => {
-    const isAdmin = localStorage.getItem('isAdmin');
-    if (!isAdmin) {
-      navigate('/admin');
-      return;
-    }
-    fetchData();
-  }, []);
+    const checkSession = async () => {
+      try {
+        // 1. Check Hardware Lock (Browser Key)
+        const localKey = localStorage.getItem('info_sec_key');
+        if (localKey !== 'valid_admin_device') {
+          navigate('/'); // Kick out if device not authorized
+          return;
+        }
+
+        // 2. Check Identity Lock (Supabase Session)
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error || !session) {
+          navigate('/admin'); // Kick to login if not logged in
+          return;
+        }
+
+        // 3. Strict Identity Verification
+        if (session.user.email !== "pugazhmanik24@gmail.com") {
+          await supabase.auth.signOut();
+          toast.error("Unauthorized Account!");
+          navigate('/');
+          return;
+        }
+
+        // ✅ Access Granted
+        fetchData();
+
+      } catch (error) {
+        console.error("Auth Error:", error);
+        navigate('/admin');
+      }
+    };
+
+    checkSession();
+  }, [navigate]);
 
   const fetchData = async () => {
     try {
@@ -65,7 +95,7 @@ const AdminDashboard = () => {
 
   const updateStatus = async (id, newStatus, studentEmail, studentName) => {
     setUpdatingId(id);
-    const toastId = toast.loading("Processing..."); // ✅ Start Loading Toast
+    const toastId = toast.loading("Processing...");
 
     try {
       // 1. Update Database
@@ -81,15 +111,14 @@ const AdminDashboard = () => {
         const emailParams = {
           to_email: studentEmail, 
           to_name: studentName,
-          // ✅ NEW MESSAGE: Directs them to your site to download ticket
           message: "Congratulations! Your registration has been approved. Please visit https://symposium-2026-three.vercel.app/status to check your status and download your entry ticket.",
         };
 
         await emailjs.send(
-          "service_oyls64s",       // Your Service ID
-          "template_6lus445",      // Your Template ID
+          "service_oyls64s",       
+          "template_6lus445",      
           emailParams,
-          "_ejheO0SbyP8Gu4TE"      // Your Public Key
+          "_ejheO0SbyP8Gu4TE"      
         );
       }
 
@@ -100,12 +129,10 @@ const AdminDashboard = () => {
       setRegistrations(updatedData);
       calculateStats(updatedData);
 
-      // ✅ Success Toast
       toast.success(`Successfully ${newStatus === 'confirmed' ? 'Approved' : 'Rejected'}`, { id: toastId });
 
     } catch (error) {
       console.error("Error:", error);
-      // ✅ Error Toast
       toast.error("Action failed: " + error.message, { id: toastId });
     } finally {
       setUpdatingId(null);
@@ -113,7 +140,6 @@ const AdminDashboard = () => {
   };
 
   const handleResetDatabase = async () => {
-    // We keep window.confirm for safety, but replace alerts with toasts
     if (!window.confirm("⚠️ DANGER: Are you sure you want to DELETE ALL DATA? This cannot be undone!")) {
       return;
     }
@@ -144,8 +170,10 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('isAdmin');
+  const handleLogout = async () => {
+    const toastId = toast.loading("Logging out...");
+    await supabase.auth.signOut();
+    toast.success("Logged out successfully", { id: toastId });
     navigate('/');
   };
 
