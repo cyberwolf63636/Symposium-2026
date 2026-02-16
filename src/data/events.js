@@ -38,6 +38,14 @@ export const events = [
     image: "https://images.unsplash.com/photo-1523821741446-edb2b68bb7a0?q=80&w=500",
     description: "Follow the clues and find the hidden glory.",
     info: "Venue: Grounds | Time: 1:30 PM"
+  },
+  {
+    id: 5,
+    category: "Non-Technical",
+    title: "Spot X",
+    image: "https://cdn.mos.cms.futurecdn.net/JyDCsqAPbxy9Zer3coEes-970-75.jpg.webp",
+    description: "Follow the clues and find the hidden glory.",
+    info: "Venue: Grounds | Time: 1:30 PM"
   }
 
 ];
