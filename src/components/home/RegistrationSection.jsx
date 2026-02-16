@@ -24,7 +24,7 @@ const RegistrationSection = () => {
     file: null
   });
 
-  const FEE_PER_PERSON = 200;
+  const FEE_PER_PERSON = 150;
 
   // 1. Calculate Total Fee
   const totalPeople = regType === 'individual' ? 1 : 1 + formData.teamMembers.length;
