@@ -40,7 +40,7 @@ export const events = [
     info: "Venue: Grounds | Time: 1:30 PM"
   },
   {
-    id: 5,
+    id: 6,
     category: "Non-Technical",
     title: "Spot X",
     image: "https://cdn.mos.cms.futurecdn.net/JyDCsqAPbxy9Zer3coEes-970-75.jpg.webp",
