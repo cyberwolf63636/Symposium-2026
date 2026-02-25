@@ -45,7 +45,7 @@ export const events = [
     title: "Spot X",
     image: "https://cdn.mos.cms.futurecdn.net/JyDCsqAPbxy9Zer3coEes-970-75.jpg.webp",
     description: "Follow the clues and find the hidden glory.",
-    info: "Venue: Grounds | Time: 1:30 PM"
+    info: "Venue: Main Auditorium | Time: 1:30 PM"
   }
 
 ];
