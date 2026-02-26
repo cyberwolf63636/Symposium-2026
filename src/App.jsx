@@ -16,6 +16,11 @@ import StatusPage from './pages/StatusPage';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 
+// ✅ NEW: Import your Popup and 404 Components
+// (Make sure the paths match where you saved them! Adjust to './pages/NotFound' if you put it in the pages folder)
+import CelebrationPopup from './components/CelebrationPopup';
+import NotFound from './components/NotFound'; 
+
 // 1. Layout for Public Pages (Navbar + Footer)
 const PublicLayout = () => {
   return (
@@ -32,7 +37,10 @@ const PublicLayout = () => {
 const App = () => {
   return (
     <>
-      {/* ✅ NEW: This container renders all your popups globally */}
+      {/* ✅ NEW: Global Celebration Popup - Will show once per session */}
+      <CelebrationPopup />
+
+      {/* This container renders all your toast popups globally */}
       <Toaster 
         position="top-center" 
         reverseOrder={false} 
@@ -53,6 +61,10 @@ const App = () => {
           <Route path="/events" element={<EventsPage />} />
           <Route path="/register" element={<RegistrationPage />} />
           <Route path="/status" element={<StatusPage />} />
+          
+          {/* ✅ NEW: 404 Catch-All Route */}
+          {/* Must be at the bottom of this block. Any unknown URL will trigger this! */}
+          <Route path="*" element={<NotFound />} />
         </Route>
 
         {/* ADMIN ROUTES (Fullscreen - No Navbar/Footer) */}
