@@ -179,7 +179,7 @@ const RegistrationSection = () => {
             You can still register <strong>offline directly at the venue</strong>!
           </p>
           <div className="mt-6 text-left bg-slate-950 p-4 rounded-lg border border-slate-800">
-            <p className="text-slate-400 text-sm mb-2"><span className="font-bold text-slate-200">📍 Venue:</span> Main Auditorium</p>
+            <p className="text-slate-400 text-sm mb-2"><span className="font-bold text-slate-200">📍 Venue:</span> SKP Engineering College , Main Auditorium</p>
             <p className="text-slate-400 text-sm"><span className="font-bold text-slate-200">🕘 Time:</span> Before 10:00 AM</p>
           </div>
         </div>
