@@ -19,7 +19,7 @@ import AdminDashboard from './pages/AdminDashboard';
 // ✅ NEW: Import your Popup and 404 Components
 // (Make sure the paths match where you saved them! Adjust to './pages/NotFound' if you put it in the pages folder)
 import CelebrationPopup from './components/CelebrationPopup';
-import NotFound from './components/NotFound'; 
+import NotFound from './pages/NotFound'; 
 
 // 1. Layout for Public Pages (Navbar + Footer)
 const PublicLayout = () => {
