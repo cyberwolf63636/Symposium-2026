@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // ✅ Import Navigation
 import { events } from '../../data/events';
 import { supabase } from '../../api/SupabaseClient'; 
 import emailjs from '@emailjs/browser';
-import toast from 'react-hot-toast';
+import toast from 'react-hot-toast'; // ✅ Import Toast
 import QRCode from "react-qr-code"; 
 import { User, Users, Plus, X, Check, Loader2 } from 'lucide-react';
 
 const RegistrationSection = () => {
-  const navigate = useNavigate(); 
-  const [regType, setRegType] = useState('individual'); 
+  const navigate = useNavigate(); // ✅ Initialize Navigation
+  const [regType, setRegType] = useState('individual'); // 'individual' or 'team'
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   const [formData, setFormData] = useState({
@@ -78,6 +78,7 @@ const RegistrationSection = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // ✅ Validation with Toasts
     if (!formData.file) {
       toast.error("Please upload the payment screenshot!");
       return;
@@ -89,9 +90,10 @@ const RegistrationSection = () => {
     }
 
     setIsSubmitting(true);
-    const toastId = toast.loading("Processing Registration..."); 
+    const toastId = toast.loading("Processing Registration..."); // ✅ Loading Toast
 
     try {
+      // 1. Upload Image to Supabase Storage
       const fileExt = formData.file.name.split('.').pop();
       const cleanName = (formData.leaderName || 'user').replace(/\s+/g, '_'); 
       const fileName = `${Date.now()}_${cleanName}.${fileExt}`;
@@ -102,10 +104,12 @@ const RegistrationSection = () => {
 
       if (uploadError) throw uploadError;
 
+      // 2. Get the Public URL
       const { data: { publicUrl } } = supabase.storage
         .from('payments-proof')
         .getPublicUrl(fileName);
 
+      // 3. Insert Data into Database
       const { error: insertError } = await supabase
         .from('registrations')
         .insert([
@@ -127,6 +131,7 @@ const RegistrationSection = () => {
 
       if (insertError) throw insertError;
 
+      // 4. SEND EMAIL NOTIFICATION (To Admin)
       const emailParams = {
         to_name: "Admin",
         from_name: formData.leaderName,
@@ -140,14 +145,16 @@ const RegistrationSection = () => {
       };
 
       await emailjs.send(
-        "service_oyls64s",     
-        "template_887gzox",    
+        "service_oyls64s",     // Your Service ID
+        "template_887gzox",    // Your 'New Registration' Template ID
         emailParams,
-        "_ejheO0SbyP8Gu4TE"    
+        "_ejheO0SbyP8Gu4TE"    // Your Public Key
       );
 
+      // 5. Success Flow
       toast.success("Registration Successful! Redirecting...", { id: toastId });
       
+      // ✅ Wait 2 seconds so user sees the success message, then redirect
       setTimeout(() => {
         navigate('/status'); 
       }, 2000);
@@ -160,34 +167,6 @@ const RegistrationSection = () => {
     }
   };
 
-  // 🔴 REGISTRATION KILL SWITCH
-  // Set to true to reopen online forms, false to show offline message
-  const isOnlineRegistrationOpen = false; 
-
-  if (!isOnlineRegistrationOpen) {
-    return (
-      <section className="py-20 text-center min-h-[60vh] flex flex-col justify-center items-center text-white">
-        <h2 className="text-4xl md:text-5xl font-bold mb-6">
-          Online Registrations <span className="text-red-500">Closed</span>
-        </h2>
-        <p className="text-xl text-slate-300 mb-8 max-w-2xl px-4">
-          Online pre-registration for INFOVISTA 2026 has officially ended.
-        </p>
-        <div className="bg-slate-900 border border-blue-500/30 p-8 rounded-2xl max-w-md w-full mx-4 shadow-xl shadow-blue-900/20">
-          <h3 className="text-2xl font-bold text-blue-400 mb-4">Still want to join?</h3>
-          <p className="text-slate-300 text-lg">
-            You can still register <strong>offline directly at the venue</strong>!
-          </p>
-          <div className="mt-6 text-left bg-slate-950 p-4 rounded-lg border border-slate-800">
-            <p className="text-slate-400 text-sm mb-2"><span className="font-bold text-slate-200">📍 Venue:</span> Main Auditorium</p>
-            <p className="text-slate-400 text-sm"><span className="font-bold text-slate-200">🕘 Time:</span> Before 10:00 AM</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  // --- THE FORM ---
   return (
     <section className="py-6 text-white min-h-screen">
       <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row gap-12">
